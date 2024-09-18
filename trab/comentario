@@ -1,0 +1,36 @@
+// db.js
+const mysql = require('mysql2');
+
+// Cria uma conexão com o banco de dados
+const connection = mysql.createConnection({
+  host: 'localhost',       // Endereço do servidor MySQL
+  user: 'root',            // Seu usuário do MySQL
+  password: '',            // Sua senha do MySQL
+  database: 'formulario'   // Nome do banco de dados
+});
+
+// Conecta ao banco de dados
+connection.connect((err) => {
+  if (err) {
+    console.error('Erro ao conectar ao banco de dados:', err);
+    return;
+  }
+  console.log('Conectado ao banco de dados MySQL');
+});
+
+module.exports = connection;
+
+// index.js
+const connection = require('./db');
+
+// Exemplo de consulta para selecionar todos os registros da tabela formulario
+connection.query('SELECT * FROM formulario', (err, results) => {
+  if (err) {
+    console.error('Erro ao consultar dados:', err);
+    return;
+  }
+  console.log('Dados da tabela formulario:', results);
+});
+
+// Não esqueça de encerrar a conexão quando terminar
+connection.end();
